@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SqrEquationApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SqrEquationApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(SqrEquationApplication.class, args);
+    }
 }

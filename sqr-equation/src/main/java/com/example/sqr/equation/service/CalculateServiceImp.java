@@ -1,9 +1,9 @@
 package com.example.sqr.equation.service;
 
-import com.example.sqr.equation.domain.AnswerEquation;
-import com.example.sqr.equation.domain.DtoResult;
+import com.example.sqr.equation.domain.EquationAnswer;
+import com.example.sqr.equation.domain.ResultDto;
 import com.example.sqr.equation.domain.RequestEquation;
-import com.example.sqr.equation.repository.DtoResultRepository;
+import com.example.sqr.equation.repository.ResultRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,33 +11,33 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CalculateServiceImp implements CalculateService {
 
-    private final DtoResultRepository dtoResultRepository;
+    private final ResultRepository resultRepository;
 
     @Override
-    public double calcDiscriminant(RequestEquation equation) {
-        return equation.getB() * equation.getB() - 4 * equation.getA() * equation.getC();
+    public double calcDiscriminant(RequestEquation requestEquation) {
+        return requestEquation.getB() * requestEquation.getB() - 4 * requestEquation.getA() * requestEquation.getC();
     }
 
-    public AnswerEquation calcRadical(double dis, RequestEquation requestEquation) {
-        var result = new AnswerEquation();
-        var d = Math.sqrt(dis);
+    public EquationAnswer calcRadical(double discriminant, RequestEquation requestEquation) {
+        var result = new EquationAnswer();
+        var d = Math.sqrt(discriminant);
         if (requestEquation.getA() == 0) {
-            result.setRadicalFirst(-requestEquation.getC() / requestEquation.getB());
+            result.setFirstRadical(-requestEquation.getC() / requestEquation.getB());
         } else {
-            result.setRadicalFirst(((-requestEquation.getB()) + d) / 2 * requestEquation.getA());
-            result.setRadicalSecond(((-requestEquation.getB()) - d) / 2 * requestEquation.getA());
+            result.setFirstRadical((-requestEquation.getB() + d) / 2 * requestEquation.getA());
+            result.setSecondRadical((-requestEquation.getB() - d) / 2 * requestEquation.getA());
         }
         mappingToAnswer(requestEquation, result);
         return result;
     }
 
-    void mappingToAnswer(RequestEquation requestEquation, AnswerEquation answerEquation) {
-        var result = new DtoResult();
+    private void mappingToAnswer(RequestEquation requestEquation, EquationAnswer equationAnswer) {
+        var result = new ResultDto();
         result.setA(requestEquation.getA());
         result.setB(requestEquation.getB());
         result.setC(requestEquation.getC());
-        result.setRadicalFirst(answerEquation.getRadicalFirst());
-        result.setRadicalSecond(answerEquation.getRadicalSecond());
-        dtoResultRepository.save(result);
+        result.setFirstRadical(equationAnswer.getFirstRadical());
+        result.setSecondRadical(equationAnswer.getSecondRadical());
+        resultRepository.save(result);
     }
 }
