@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: boris
+      changes:
+        - createTable:
+            tableName: result
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: a
+                  type: double
+              - column:
+                  name: b
+                  type: double
+              - column:
+                  name: c
+                  type: double
+              - column:
+                  name: radical_first
+                  type: double
+              - column:
+                  name: radical_second
+                  type: double
+        - sql:
+            comment: comment
+            dbms: 'H2'
+            endDelimiter: \nGO
+            splitStatements: true
+            sql: CREATE SEQUENCE id_seq MINVALUE 1 MAXVALUE 999999999999999999999999999 START WITH 1 INCREMENT BY 1 CACHE 20;
+            stripComments: true
