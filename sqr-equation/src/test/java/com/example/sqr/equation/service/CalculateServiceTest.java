@@ -19,9 +19,6 @@ public class CalculateServiceTest {
     @Autowired
     private CalculateService calculateService;
 
-    @MockBean
-    private ResultRepository resultRepository;
-
     @Test
     public void calcDiscriminant() {
         var requestEquation = new RequestEquation();
